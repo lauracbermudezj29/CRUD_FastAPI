@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead
+from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead, PoblarRequest
 from ..services import persona_service
 
 router = APIRouter(prefix="/personas", tags=["personas"])
@@ -43,3 +43,7 @@ def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     """Delete a Persona by ID via service layer."""
     persona_service.delete_persona(db, persona_id)
     return None
+
+@router.post("/poblar")
+def poblar_personas(data: PoblarRequest, db: Session = Depends(get_db)):
+    return persona_service.poblar_personas(db, data.cantidad)
