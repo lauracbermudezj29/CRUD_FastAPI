@@ -44,3 +44,5 @@ class PersonaRead(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class PoblarRequest(BaseModel):
+    cantidad: int

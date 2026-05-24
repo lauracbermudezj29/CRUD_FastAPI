@@ -44,6 +44,10 @@ def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     persona_service.delete_persona(db, persona_id)
     return None
 
-@router.post("/poblar")
+@router.post("/poblar", status_code=201)
 def poblar_personas(data: PoblarRequest, db: Session = Depends(get_db)):
-    return persona_service.poblar_personas(db, data.cantidad)
+    persona_service.poblar_personas(db, data.cantidad)
+    return {
+        "message": f"{data.cantidad} usuarios creados exitosamente",
+        "status": 201
+    }

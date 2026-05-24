@@ -1,6 +1,7 @@
 from typing import Sequence
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from faker import Faker
 
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
@@ -76,3 +77,24 @@ def delete_persona(db: Session, persona_id: int) -> None:
         raise PersonaNotFoundError()
     db.delete(obj)
     db.commit()
+
+fake = Faker()
+
+def poblar_personas(db: Session, cantidad: int):
+    personas = []
+    for _ in range(cantidad):
+        nombre = fake.first_name()
+        apellido = fake.last_name()
+        persona = Persona(
+            first_name=nombre,
+            last_name=apellido,
+            email=f"{nombre.lower()}.{apellido.lower()}@gmail.com",
+            phone=fake.phone_number(),
+            birth_date=fake.date_of_birth(),
+            is_active=fake.boolean(),
+            notes=fake.sentence() if fake.boolean() else None,
+        )
+        db.add(persona)
+        personas.append(persona)
+    db.commit()
+    return len(personas)
