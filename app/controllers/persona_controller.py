@@ -51,3 +51,12 @@ def poblar_personas(data: PoblarRequest, db: Session = Depends(get_db)):
         "message": f"{data.cantidad} usuarios creados exitosamente",
         "status": 201
     }
+
+@router.delete("/reset", status_code=200)
+def reset_personas(db: Session = Depends(get_db)):
+    deleted_count = persona_service.reset_personas(db)
+
+    return {
+        "message": "Base de datos limpiada. Se eliminaron todos los registros.",
+        "deleted_count": deleted_count
+    }
