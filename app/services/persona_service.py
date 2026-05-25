@@ -98,3 +98,9 @@ def poblar_personas(db: Session, cantidad: int):
         personas.append(persona)
     db.commit()
     return len(personas)
+
+def reset_personas(db):
+    deleted_count = db.query(Persona).count()
+    db.query(Persona).delete()
+    db.commit()
+    return deleted_count
