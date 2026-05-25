@@ -1,5 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, Query, status
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from ..database import get_db
@@ -32,6 +33,22 @@ def estadisticas_dominios(db: Session = Depends(get_db)):
 @router.get("/estadisticas/edad")
 def estadisticas_edad(db: Session = Depends(get_db)):
     return persona_service.estadisticas_edad(db)
+
+@router.get("/buscar/{termino}")
+def buscar_personas(termino: str, db: Session = Depends(get_db)):
+    """Busca personas por nombre, apellido o email."""
+    return persona_service.buscar_personas(db, termino)
+
+
+@router.get("/exportar/csv")
+def exportar_csv(db: Session = Depends(get_db)):
+    """Exporta todos los registros en formato CSV."""
+    output = persona_service.exportar_csv(db)
+    return StreamingResponse(
+        output,
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=personas.csv"}
+    )
 
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
