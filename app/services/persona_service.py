@@ -2,6 +2,7 @@ from typing import Sequence
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from faker import Faker
+from datetime import date
 
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
@@ -122,3 +123,28 @@ def estadisticas_dominios(db):
         else:
             resultado[dominio] = 1
     return resultado
+
+def estadisticas_edad(db):
+    personas = db.query(Persona).all()
+    edades = []
+    for persona in personas:
+        if persona.birth_date:
+            hoy = date.today()
+            edad = hoy.year - persona.birth_date.year
+            if (
+                (hoy.month, hoy.day)
+                < (persona.birth_date.month, persona.birth_date.day)
+            ):
+                edad -= 1
+            edades.append(edad)
+    if not edades:
+        return {
+            "edad_promedio": 0,
+            "edad_minima": 0,
+            "edad_maxima": 0
+        }
+    return {
+        "edad_promedio": round(sum(edades) / len(edades)),
+        "edad_minima": min(edades),
+        "edad_maxima": max(edades)
+    }
