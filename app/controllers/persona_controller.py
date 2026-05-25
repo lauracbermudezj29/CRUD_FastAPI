@@ -25,6 +25,9 @@ def list_personas(
     """List Personas with pagination via service layer."""
     return persona_service.list_personas(db, skip=skip, limit=limit)
 
+@router.get("/estadisticas/dominios")
+def estadisticas_dominios(db: Session = Depends(get_db)):
+    return persona_service.estadisticas_dominios(db)
 
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
