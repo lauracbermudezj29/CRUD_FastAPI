@@ -29,6 +29,10 @@ def list_personas(
 def estadisticas_dominios(db: Session = Depends(get_db)):
     return persona_service.estadisticas_dominios(db)
 
+@router.get("/estadisticas/edad")
+def estadisticas_edad(db: Session = Depends(get_db)):
+    return persona_service.estadisticas_edad(db)
+
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
     """Retrieve a Persona by ID via service layer."""
