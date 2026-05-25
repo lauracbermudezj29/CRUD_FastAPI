@@ -95,7 +95,7 @@ def poblar_personas(db: Session, cantidad: int):
         persona = Persona(
             first_name=nombre,
             last_name=apellido,
-            email=f"{nombre.lower()}.{apellido.lower()}@{random.choice(dominios)}"
+            email=f"{nombre.lower()}.{apellido.lower()}@{random.choice(dominios)}",
             phone=fake.phone_number(),
             birth_date=fake.date_of_birth(),
             is_active=fake.boolean(),
