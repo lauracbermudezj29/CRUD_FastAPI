@@ -35,10 +35,10 @@ def estadisticas_edad(db: Session = Depends(get_db)):
     return persona_service.estadisticas_edad(db)
 
 @router.get("/buscar/{termino}")
-def buscar_personas(termino: str, db: Session = Depends(get_db)):
+def buscar_personas(termino: str, limite: int = Query(50, ge=1, le=200), db: Session = Depends(get_db)):
     """Busca personas por nombre, apellido o email usando operador OR."""
     # Delega la busqueda al servicio, retorna lista vacia si no hay resultados
-    return persona_service.buscar_personas(db, termino)
+    return persona_service.buscar_personas(db, termino, limite)
 
 
 @router.get("/exportar/csv")
