@@ -36,13 +36,15 @@ def estadisticas_edad(db: Session = Depends(get_db)):
 
 @router.get("/buscar/{termino}")
 def buscar_personas(termino: str, db: Session = Depends(get_db)):
-    """Busca personas por nombre, apellido o email."""
+    """Busca personas por nombre, apellido o email usando operador OR."""
+    # Delega la busqueda al servicio, retorna lista vacia si no hay resultados
     return persona_service.buscar_personas(db, termino)
 
 
 @router.get("/exportar/csv")
 def exportar_csv(db: Session = Depends(get_db)):
-    """Exporta todos los registros en formato CSV."""
+    """Exporta todos los registros en formato CSV descargable."""
+    # Genera el archivo CSV y lo retorna como StreamingResponse
     output = persona_service.exportar_csv(db)
     return StreamingResponse(
         output,
