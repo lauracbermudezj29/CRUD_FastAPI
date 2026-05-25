@@ -151,13 +151,14 @@ def estadisticas_edad(db):
 
 def buscar_personas(db: Session, termino: str):
     """Busca por first_name, last_name o email usando OR."""
-    like = f"%{termino}%"
+    if not termino or len(termino.strip()) == 0:
+        return []
+    like = f"%{termino.strip()}%"
     return db.query(Persona).filter(
         (Persona.first_name.ilike(like)) |
         (Persona.last_name.ilike(like)) |
         (Persona.email.ilike(like))
     ).all()
-
 
 def exportar_csv(db: Session):
     """Retorna todos los registros como string CSV."""
