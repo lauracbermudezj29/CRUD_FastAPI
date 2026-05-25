@@ -148,3 +148,26 @@ def estadisticas_edad(db):
         "edad_minima": min(edades),
         "edad_maxima": max(edades)
     }
+
+def buscar_personas(db: Session, termino: str):
+    """Busca por first_name, last_name o email usando OR."""
+    like = f"%{termino}%"
+    return db.query(Persona).filter(
+        (Persona.first_name.ilike(like)) |
+        (Persona.last_name.ilike(like)) |
+        (Persona.email.ilike(like))
+    ).all()
+
+
+def exportar_csv(db: Session):
+    """Retorna todos los registros como string CSV."""
+    import csv
+    import io
+    personas = db.query(Persona).all()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["id", "first_name", "last_name", "email", "phone", "birth_date", "is_active", "notes"])
+    for p in personas:
+        writer.writerow([p.id, p.first_name, p.last_name, p.email, p.phone, p.birth_date, p.is_active, p.notes])
+    output.seek(0)
+    return output
