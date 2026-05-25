@@ -104,3 +104,14 @@ def reset_personas(db):
     db.query(Persona).delete()
     db.commit()
     return deleted_count
+
+def estadisticas_dominios(db):
+    personas = db.query(Persona).all()
+    resultado = {}
+    for persona in personas:
+        dominio = persona.email.split("@")[1]
+        if dominio in resultado:
+            resultado[dominio] += 1
+        else:
+            resultado[dominio] = 1
+    return resultado
