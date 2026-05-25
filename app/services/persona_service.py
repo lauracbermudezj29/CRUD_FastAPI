@@ -168,6 +168,9 @@ def exportar_csv(db: Session):
     output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow(["id", "first_name", "last_name", "email", "phone", "birth_date", "is_active", "notes"])
+    if not personas:
+        output.seek(0)
+        return output
     for p in personas:
         writer.writerow([p.id, p.first_name, p.last_name, p.email, p.phone, p.birth_date, p.is_active, p.notes])
     output.seek(0)
