@@ -7,6 +7,13 @@ from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
 
+import random
+dominios = [
+    "gmail.com",
+    "outlook.com",
+    "hotmail.com",
+    "yahoo.com"
+]
 
 def create_persona(db: Session, payload: PersonaCreate) -> Persona:
     """Create a Persona ensuring unique email."""
@@ -88,7 +95,7 @@ def poblar_personas(db: Session, cantidad: int):
         persona = Persona(
             first_name=nombre,
             last_name=apellido,
-            email=f"{nombre.lower()}.{apellido.lower()}@gmail.com",
+            email=f"{nombre.lower()}.{apellido.lower()}@{random.choice(dominios)}"
             phone=fake.phone_number(),
             birth_date=fake.date_of_birth(),
             is_active=fake.boolean(),
