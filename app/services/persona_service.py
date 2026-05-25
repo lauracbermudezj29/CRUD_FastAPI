@@ -149,16 +149,17 @@ def estadisticas_edad(db):
         "edad_maxima": max(edades)
     }
 
-def buscar_personas(db: Session, termino: str):
-    """Busca por first_name, last_name o email usando OR."""
-    if not termino or len(termino.strip()) == 0:
+def buscar_personas(db: Session, termino: str, limite: int = 50):
+    """Busca por first_name, last_name o email usando OR. Máximo 50 resultados."""
+    if not termino or len(termino.strip()) < 2:
         return []
     like = f"%{termino.strip()}%"
     return db.query(Persona).filter(
         (Persona.first_name.ilike(like)) |
         (Persona.last_name.ilike(like)) |
         (Persona.email.ilike(like))
-    ).all()
+    ).limit(limite).all()
+
 
 def exportar_csv(db: Session):
     """Retorna todos los registros como string CSV con encoding UTF-8."""
