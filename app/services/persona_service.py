@@ -161,11 +161,12 @@ def buscar_personas(db: Session, termino: str):
     ).all()
 
 def exportar_csv(db: Session):
-    """Retorna todos los registros como string CSV."""
+    """Retorna todos los registros como string CSV con encoding UTF-8."""
     import csv
     import io
     personas = db.query(Persona).all()
     output = io.StringIO()
+    output.write('\ufeff')  # BOM para que Excel reconozca UTF-8
     writer = csv.writer(output)
     writer.writerow(["id", "first_name", "last_name", "email", "phone", "birth_date", "is_active", "notes"])
     if not personas:
