@@ -65,6 +65,13 @@ def bulk_desactivar(data: BulkDesactivarRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="La lista debe tener entre 1 y 100 IDs.")
     return persona_service.bulk_desactivar(db, data.ids)
 
+@router.get("/cumpleanios/mes/{numero_mes}")
+def cumpleanios_mes(numero_mes: int, db: Session = Depends(get_db)):
+    """Retorna personas que cumplen años en el mes dado (1-12)."""
+    if numero_mes < 1 or numero_mes > 12:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail="El mes debe ser un entero entre 1 y 12.")
+    return persona_service.cumpleanios_mes(db, numero_mes)
 
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
