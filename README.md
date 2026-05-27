@@ -53,6 +53,18 @@ DATABASE_URL=mysql+pymysql://usuario:contraseña@localhost:3306/nombre_basedatos
 - `PUT /personas/{id}` → actualizar (parcial) persona
 - `DELETE /personas/{id}` → eliminar persona
 
+### Nuevos endpoints analíticos (Laboratorio 1)
+
+- `POST /personas/poblar` → generar registros masivos con Faker
+- `DELETE /personas/reset` → eliminar todos los registros
+- `GET /personas/estadisticas/dominios` → conteo por dominio de correo
+- `GET /personas/estadisticas/edad` → estadísticas de edad
+- `GET /personas/buscar/{termino}` → búsqueda general por OR
+- `GET /personas/exportar/csv` → exportar tabla completa en CSV
+- `GET /personas/reporte/activos` → usuarios activos (proyección reducida)
+- `GET /personas/cumpleanios/mes/{numero_mes}` → filtro por mes de cumpleaños
+- `PATCH /personas/bulk/desactivar` → desactivación masiva por lista de IDs
+
 ### Esquemas (JSON)
 
 - Crear:
