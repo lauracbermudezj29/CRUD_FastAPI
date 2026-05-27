@@ -190,3 +190,17 @@ def reporte_activos(db: Session):
         }
         for p in personas
     ]
+def bulk_desactivar(db: Session, ids: list[int]):
+    """Desactiva masivamente por IDs; reporta los no encontrados."""
+    existentes = db.query(Persona).filter(Persona.id.in_(ids)).all()
+    ids_encontrados = [p.id for p in existentes]
+    ids_no_encontrados = [i for i in ids if i not in ids_encontrados]
+    for persona in existentes:
+        persona.is_active = False
+    db.commit()
+    return {
+        "message": "Operación completada.",
+        "desactivados": ids_encontrados,
+        "no_encontrados": ids_no_encontrados,
+        "total_desactivados": len(ids_encontrados)
+    }
