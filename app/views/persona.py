@@ -48,3 +48,5 @@ class PoblarRequest(BaseModel):
     cantidad: int
     
 # Endpoint F: reporte de usuarios activos (proyección reducida)
+class BulkDesactivarRequest(BaseModel):
+    ids: list[int]
