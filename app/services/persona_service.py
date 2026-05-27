@@ -204,3 +204,10 @@ def bulk_desactivar(db: Session, ids: list[int]):
         "no_encontrados": ids_no_encontrados,
         "total_desactivados": len(ids_encontrados)
     }
+    
+def cumpleanios_mes(db: Session, numero_mes: int):
+    """Retorna personas cuyo birth_date cae en el mes indicado."""
+    from sqlalchemy import extract
+    return db.query(Persona).filter(
+        extract("month", Persona.birth_date) == numero_mes
+    ).all()
