@@ -131,3 +131,23 @@ curl -s -X DELETE http://127.0.0.1:8000/personas/1 -i
 
 - Si lo iniciaste en la misma terminal: usa `CTRL+C`.
 - Si corre en background, puedes cerrar esa terminal o matar el proceso de uvicorn (`pkill -f uvicorn`).
+
+## División de responsabilidades (Laboratorio 1)
+
+### Nuevos endpoints implementados
+
+#### Laura Bermudez
+- `POST /personas/poblar` — Carga masiva con Faker
+- `DELETE /personas/reset` — Borrado total de registros
+- `GET /personas/estadisticas/dominios` — Conteo por dominio de email
+- `GET /personas/estadisticas/edad` — Edad promedio, mínima y máxima
+
+#### Juan Jose Londoño
+
+- `GET /personas/buscar/{termino}` — Búsqueda por nombre, apellido o email
+- `GET /personas/exportar/csv` — Exportación de datos en formato CSV
+
+#### Eendxi Cuetia 
+- `GET /personas/reporte/activos` — Listado de usuarios activos con proyección reducida
+- `GET /personas/cumpleanios/mes/{numero_mes}` — Filtro por mes de cumpleaños
+- `PATCH /personas/bulk/desactivar` — Desactivación masiva con reporte de IDs no encontrados
