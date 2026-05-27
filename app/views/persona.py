@@ -46,3 +46,5 @@ class PersonaRead(BaseModel):
 
 class PoblarRequest(BaseModel):
     cantidad: int
+    
+# Endpoint F: reporte de usuarios activos (proyección reducida)
