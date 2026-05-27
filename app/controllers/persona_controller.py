@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead, PoblarRequest, BulkDesactivarRequest
+from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead, PoblarRequest,BulkDesactivarRequest
 from ..services import persona_service
 
 router = APIRouter(prefix="/personas", tags=["personas"])
@@ -56,6 +56,15 @@ def exportar_csv(db: Session = Depends(get_db)):
 def reporte_activos(db: Session = Depends(get_db)):
     """Retorna usuarios activos con proyección reducida: id, email, phone, is_active."""
     return persona_service.reporte_activos(db)
+
+@router.patch("/bulk/desactivar")
+def bulk_desactivar(data: BulkDesactivarRequest, db: Session = Depends(get_db)):
+    """Desactiva masivamente por lista de IDs."""
+    if not data.ids or len(data.ids) > 100:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail="La lista debe tener entre 1 y 100 IDs.")
+    return persona_service.bulk_desactivar(db, data.ids)
+
 
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
