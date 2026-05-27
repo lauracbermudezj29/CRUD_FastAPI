@@ -177,3 +177,16 @@ def exportar_csv(db: Session):
         writer.writerow([p.id, p.first_name, p.last_name, p.email, p.phone, p.birth_date, p.is_active, p.notes])
     output.seek(0)
     return output
+
+def reporte_activos(db: Session):
+    """Retorna solo usuarios activos con proyección reducida."""
+    personas = db.query(Persona).filter(Persona.is_active == True).all()
+    return [
+        {
+            "id": p.id,
+            "email": p.email,
+            "phone": p.phone,
+            "is_active": p.is_active
+        }
+        for p in personas
+    ]
