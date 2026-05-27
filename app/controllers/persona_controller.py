@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead, PoblarRequest
+from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead, PoblarRequest, BulkDesactivarRequest
 from ..services import persona_service
 
 router = APIRouter(prefix="/personas", tags=["personas"])
@@ -51,6 +51,11 @@ def exportar_csv(db: Session = Depends(get_db)):
         media_type="text/csv",
         headers={"Content-Disposition": "attachment; filename=personas.csv"}
     )
+
+@router.get("/reporte/activos")
+def reporte_activos(db: Session = Depends(get_db)):
+    """Retorna usuarios activos con proyección reducida: id, email, phone, is_active."""
+    return persona_service.reporte_activos(db)
 
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
