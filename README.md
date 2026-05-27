@@ -99,6 +99,9 @@ Importa `FastAPI-CRUD-Demo.postman_collection.json` en Postman. Variables:
 
 - Las tablas se crean automáticamente al iniciar (solo con fines de demo).
 - Asegúrate de crear la base de datos en MySQL y de que el usuario tenga permisos (por ejemplo, `CREATE DATABASE fastapi_demo;`).
+- El endpoint `GET /personas/buscar/{termino}` requiere mínimo 2 caracteres para realizar la búsqueda y acepta un parámetro opcional `limite` (default 50, máximo 200) para controlar el número de resultados. Ejemplo: `GET /personas/buscar/juan?limite=10`
+- El endpoint `GET /personas/exportar/csv` retorna un archivo CSV descargable compatible con Excel, con encoding UTF-8 (BOM incluido) para soporte de tildes y caracteres especiales.
+
 
 ## Estructura MVC
 
