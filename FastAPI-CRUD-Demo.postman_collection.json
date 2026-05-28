@@ -1,79 +1,371 @@
 {
   "info": {
-    "name": "FastAPI Persona CRUD (MySQL)",
+    "_postman_id": "11f0d27f-8e2b-483a-9443-2dddf4ea6d8b",
+    "name": "FastAPI-CRUD-Demo",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "7d4b4d3a-8bf0-4a05-91b1-42f8f3e3f1d1"
+    "_exporter_id": "55260841",
+    "_collection_link": "https://go.postman.co/collection/55260841-11f0d27f-8e2b-483a-9443-2dddf4ea6d8b?source=collection_link"
   },
-  "variable": [
-    { "key": "base_url", "value": "http://localhost:8000" },
-    { "key": "persona_id", "value": "1" }
-  ],
   "item": [
     {
-      "name": "Health",
+      "name": "Get data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
-        "url": { "raw": "{{base_url}}/health", "host": ["{{base_url}}"], "path": ["health"] }
-      }
+        "url": {
+          "raw": "postman-echo.com/get",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "get"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
     },
     {
-      "name": "Personas",
-      "item": [
+      "name": "Post data",
+      "event": [
         {
-          "name": "Create Persona",
-          "request": {
-            "method": "POST",
-            "header": [ { "key": "Content-Type", "value": "application/json" } ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Pérez\",\n  \"email\": \"juan.perez@example.com\",\n  \"phone\": \"+57 3000000000\",\n  \"birth_date\": \"1990-05-20\",\n  \"is_active\": true,\n  \"notes\": \"Cliente frecuente\"\n}"
-            },
-            "url": { "raw": "{{base_url}}/personas", "host": ["{{base_url}}"], "path": ["personas"] }
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ]
           }
-        },
-        {
-          "name": "List Personas",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/personas",
-              "host": ["{{base_url}}"],
-              "path": ["personas"],
-              "query": [ { "key": "skip", "value": "0" }, { "key": "limit", "value": "100" } ]
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
             }
           }
         },
+        "url": {
+          "raw": "postman-echo.com/post",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "post"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 5 reporte activos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/reporte/activos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "reporte",
+            "activos"
+          ]
+        },
+        "description": "endpoint f "
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 6-CUMPLE/MES",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/cumpleanios/mes/5",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "cumpleanios",
+            "mes",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 7 - Desactivar personas por id",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"ids\": [1, 2, 3, 9999]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/bulk/desactivar",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "bulk",
+            "desactivar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 4 - Buscar personas por término",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/buscar/gmail",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "buscar",
+            "gmail"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 8 - Exportar personas a CSV",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/exportar/csv",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "exportar",
+            "csv"
+          ]
+        }
+      },
+      "response": [
         {
-          "name": "Get Persona by ID",
-          "request": {
+          "name": "Endpoint 8 - Exportar personas a CSV",
+          "originalRequest": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/personas/{{persona_id}}", "host": ["{{base_url}}"], "path": ["personas", "{{persona_id}}"] }
-          }
-        },
-        {
-          "name": "Update Persona",
-          "request": {
-            "method": "PUT",
-            "header": [ { "key": "Content-Type", "value": "application/json" } ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"juan.perez2@example.com\",\n  \"notes\": \"Actualizado\"\n}"
+            "url": {
+              "raw": "http://127.0.0.1:8000/personas/exportar/csv",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "personas",
+                "exportar",
+                "csv"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Thu, 28 May 2026 18:09:16 GMT"
             },
-            "url": { "raw": "{{base_url}}/personas/{{persona_id}}", "host": ["{{base_url}}"], "path": ["personas", "{{persona_id}}"] }
-          }
-        },
-        {
-          "name": "Delete Persona",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": { "raw": "{{base_url}}/personas/{{persona_id}}", "host": ["{{base_url}}"], "path": ["personas", "{{persona_id}}"] }
-          }
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-disposition",
+              "value": "attachment; filename=personas.csv"
+            },
+            {
+              "key": "content-type",
+              "value": "text/csv; charset=utf-8"
+            },
+            {
+              "key": "transfer-encoding",
+              "value": "chunked"
+            }
+          ],
+          "cookie": [],
+          "body": "id,first_name,last_name,email,phone,birth_date,is_active,notes\r\n1,Vanessa,Cooper,vanessa.cooper@gmail.com,381.807.0897x077,1967-04-18,False,Prevent military he science risk.\r\n2,Sean,Brown,sean.brown@hotmail.com,715-531-0717x5662,1974-08-12,False,\r\n3,Cristian,Atkinson,cristian.atkinson@yahoo.com,937.479.9463x3206,1928-01-01,False,\r\n4,Randy,Brewer,randy.brewer@yahoo.com,371.603.3273x7625,1959-08-15,False,\r\n5,Yolanda,Taylor,yolanda.taylor@outlook.com,(703)471-7759x51908,1965-10-12,True,Maybe learn manage budget century.\r\n6,Deanna,Davis,deanna.davis@yahoo.com,9987777810,1985-11-07,False,\r\n7,Teresa,Tyler,teresa.tyler@hotmail.com,437-482-8022,1958-11-02,False,\r\n8,Charles,Hudson,charles.hudson@gmail.com,8903294716,1977-11-28,False,\r\n9,Lindsey,Perry,lindsey.perry@outlook.com,(428)958-3606x4772,1953-01-17,False,Memory thus lose finish realize family.\r\n10,Zachary,Rice,zachary.rice@yahoo.com,6066531215,1968-05-05,False,Little particularly own human away article question.\r\n11,Matthew,Wheeler,matthew.wheeler@yahoo.com,451-723-1727x93371,2008-12-21,True,Book hundred of gun shake no animal.\r\n12,Bryan,Taylor,bryan.taylor@hotmail.com,(348)573-7351x1458,1922-11-04,True,\r\n13,Lisa,Cox,lisa.cox@yahoo.com,784.720.9371,1984-07-30,True,Again produce employee mention middle score talk.\r\n14,Alexander,Gray,alexander.gray@gmail.com,7873467884,1968-11-02,True,\r\n15,William,Schneider,william.schneider@outlook.com,+1-738-824-7126x444,1989-05-29,True,\r\n16,Alan,Silva,alan.silva@yahoo.com,+1-300-986-1492x859,2018-10-02,False,Movement open hair eight life beat.\r\n17,Justin,Miller,justin.miller@outlook.com,9587168525,1952-11-09,False,\r\n18,Amanda,Benson,amanda.benson@gmail.com,434-568-6005x525,1965-07-26,False,\r\n19,Keith,Johnson,keith.johnson@hotmail.com,(789)947-8953x11523,1971-07-04,False,Instead protect common sound picture whom describe local.\r\n20,Richard,Sims,richard.sims@outlook.com,476.957.8538,1986-10-10,True,\r\n21,John,Smith,john.smith@hotmail.com,743.925.1487,1935-11-26,True,Once area response sea pressure ever follow official.\r\n22,James,Christensen,james.christensen@outlook.com,(312)479-6497x642,1997-03-11,False,Plant agree attention good market smile.\r\n23,Emily,Harmon,emily.harmon@outlook.com,258-789-9812x008,2001-05-22,False,Start instead tend public.\r\n24,Joshua,Holmes,joshua.holmes@yahoo.com,(954)384-0801x21003,1964-05-24,True,\r\n25,Luis,Baker,luis.baker@hotmail.com,(458)854-7830x6746,1924-05-31,False,\r\n26,Maria,Kramer,maria.kramer@gmail.com,(507)648-2017x296,2018-06-02,True,Mother sing size great.\r\n27,Jill,Smith,jill.smith@gmail.com,625-974-1712,1913-04-03,True,\r\n28,Jasmine,Moran,jasmine.moran@yahoo.com,(403)777-5205x770,1929-12-17,False,\r\n29,Randy,Jones,randy.jones@yahoo.com,207.217.0565x368,1996-02-04,False,\r\n30,Michelle,Butler,michelle.butler@yahoo.com,621-622-9271,2022-07-20,True,\r\n31,Amy,Chang,amy.chang@hotmail.com,+1-652-770-6409x155,1913-09-22,False,\r\n32,Henry,Clark,henry.clark@gmail.com,+1-466-385-3489x00284,1969-06-04,True,\r\n33,Angela,Clay,angela.clay@gmail.com,8139213593,1922-04-11,True,\r\n34,Penny,Pearson,penny.pearson@outlook.com,224.803.7559,1927-01-23,True,Use partner offer make data.\r\n35,Michael,Taylor,michael.taylor@hotmail.com,(385)368-3068,2024-07-14,True,Door responsibility itself including outside both.\r\n36,Holly,Daniels,holly.daniels@hotmail.com,001-533-296-9605x7441,1983-02-07,True,Detail be sound may up enjoy reason PM.\r\n37,Daniel,Ross,daniel.ross@yahoo.com,(581)314-9079x1943,2013-05-22,False,\r\n38,William,Cabrera,william.cabrera@hotmail.com,(314)445-1332,1911-08-31,False,Market activity picture wonder officer.\r\n39,Mark,Dougherty,mark.dougherty@yahoo.com,569.448.6207x51692,2024-10-17,False,Base American discover ability admit describe to.\r\n40,Tara,Kent,tara.kent@outlook.com,573.207.3734,1952-08-16,False,Win song contain admit visit.\r\n41,Kevin,Baker,kevin.baker@outlook.com,001-775-731-8157x273,2021-05-03,False,\r\n42,Ryan,Mills,ryan.mills@hotmail.com,+1-542-337-1635x1818,1945-06-13,False,Ten office major while.\r\n43,Christopher,Krueger,christopher.krueger@gmail.com,001-461-395-0825x9880,1959-08-14,False,Yourself whole generation explain have together each.\r\n44,Teresa,Peterson,teresa.peterson@hotmail.com,892-917-3403,1995-11-13,True,Writer from serious never both.\r\n45,Jonathan,Valdez,jonathan.valdez@gmail.com,412-669-0820x104,2026-03-25,True,Represent in avoid size certain participant manage.\r\n46,Karen,Forbes,karen.forbes@outlook.com,6744263142,1940-03-06,True,City value later image bar write apply.\r\n47,Jennifer,Clark,jennifer.clark@outlook.com,869-437-9375x8228,1967-04-30,False,Enough area position job.\r\n48,Lori,Castillo,lori.castillo@yahoo.com,001-328-689-4436x3551,2016-04-25,False,Along close require site.\r\n49,Evan,Paul,evan.paul@hotmail.com,822.988.1390x1768,1987-11-03,False,\r\n50,Samuel,Cooper,samuel.cooper@hotmail.com,001-309-475-1282x8866,1933-11-28,False,Thus along question somebody.\r\n51,Greg,Hayes,greg.hayes@yahoo.com,001-259-526-9152x01880,1996-07-07,True,\r\n52,John,Simon,john.simon@outlook.com,001-798-301-3321x670,2001-12-13,True,\r\n53,Lisa,Brooks,lisa.brooks@gmail.com,9763060530,1994-09-09,True,\r\n54,Theodore,Lowe,theodore.lowe@hotmail.com,811.832.1243x1596,1969-06-22,True,Way Democrat amount model institution.\r\n55,David,Cantrell,david.cantrell@hotmail.com,+1-293-900-3752x57273,1992-12-04,True,\r\n56,Robert,Haley,robert.haley@yahoo.com,253.923.8768,1935-02-22,False,Staff both artist actually performance conference usually.\r\n57,Elizabeth,Brooks,elizabeth.brooks@outlook.com,584-751-1517,2022-05-25,True,\r\n58,Brittany,Morales,brittany.morales@gmail.com,(985)377-4146,1955-08-22,False,Change even fill moment some prepare back collection.\r\n59,Jesse,Johnson,jesse.johnson@yahoo.com,(438)814-4791,1975-05-03,False,Article might back front teach than yet.\r\n60,Elizabeth,Mathis,elizabeth.mathis@hotmail.com,001-410-265-5136x840,1993-09-04,True,Hear let better foot card.\r\n61,Martha,Cordova,martha.cordova@yahoo.com,3828604945,1982-06-02,True,\r\n62,Douglas,Duran,douglas.duran@hotmail.com,001-555-288-0420,1993-08-05,True,\r\n63,Christian,Gonzalez,christian.gonzalez@hotmail.com,996.651.9156,1981-02-11,False,\r\n64,David,Morrison,david.morrison@yahoo.com,435-762-8900x888,1947-02-20,True,\r\n65,Sandra,Patterson,sandra.patterson@outlook.com,633.296.6605,1997-08-02,True,Practice age future customer between partner.\r\n66,Stephanie,Lopez,stephanie.lopez@hotmail.com,(944)249-2133x905,1970-09-19,False,\r\n67,Alejandro,Allen,alejandro.allen@hotmail.com,267.966.4957x13920,1939-10-13,True,\r\n68,Emily,Scott,emily.scott@hotmail.com,357-415-2759,2006-08-13,False,\r\n69,David,Flowers,david.flowers@hotmail.com,+1-676-547-3607x711,1957-05-06,False,\r\n70,Loretta,Abbott,loretta.abbott@outlook.com,(251)477-0347x56819,1924-11-24,False,\r\n71,Larry,Glass,larry.glass@outlook.com,(658)249-4032x431,1951-01-05,False,Fill ever sing forget term.\r\n72,Tammy,Perry,tammy.perry@hotmail.com,(862)451-8700x375,1984-11-14,True,\r\n73,William,Johnston,william.johnston@outlook.com,(712)859-0255x6341,2015-01-14,False,Agent practice mind consider hold successful research.\r\n74,Christopher,Burns,christopher.burns@hotmail.com,(303)345-8133,1953-02-15,False,Through human box choice deep yet production.\r\n75,Margaret,Mccormick,margaret.mccormick@yahoo.com,+1-972-234-6654x5002,1928-05-24,True,\r\n76,Helen,Clark,helen.clark@hotmail.com,446.329.8245,1949-04-30,False,Door plan expert drug fire.\r\n77,Isabella,Jones,isabella.jones@yahoo.com,250.541.2390,1929-09-20,False,Every into money tree hit type.\r\n78,Greg,Mcknight,greg.mcknight@yahoo.com,(964)813-9752,2015-12-19,False,\r\n79,Robert,Rangel,robert.rangel@gmail.com,(401)256-5087x2562,1944-06-05,False,Successful pretty dream probably society table foreign network.\r\n80,Alyssa,Hartman,alyssa.hartman@outlook.com,(493)837-3915,1973-04-20,True,\r\n81,Philip,Hudson,philip.hudson@outlook.com,444-770-3942,1963-04-15,True,\r\n82,Lisa,Byrd,lisa.byrd@gmail.com,001-725-789-2801x3943,1951-12-04,True,Majority common arrive.\r\n83,Kimberly,Anthony,kimberly.anthony@yahoo.com,668.539.4145,1911-12-05,True,\r\n84,Caitlyn,Kim,caitlyn.kim@gmail.com,+1-833-898-6226x1466,1947-07-01,False,Apply condition statement wonder.\r\n85,Kathryn,Rodriguez,kathryn.rodriguez@hotmail.com,(322)697-3948x84755,1986-05-22,True,\r\n86,Sara,Wilson,sara.wilson@outlook.com,(995)499-3632x45306,1928-11-27,True,\r\n87,Michelle,May,michelle.may@gmail.com,(430)995-1583x04454,1919-11-30,False,Top likely pressure them some.\r\n88,Adrian,Baker,adrian.baker@gmail.com,001-316-478-8330x06396,1949-03-14,False,Light democratic toward director turn almost expect.\r\n89,Debra,Harris,debra.harris@hotmail.com,(703)347-5924x9366,1914-03-09,True,\r\n90,Samantha,Hudson,samantha.hudson@gmail.com,8809370956,1934-08-22,True,Shake successful fall each little message open.\r\n91,Christina,Simmons,christina.simmons@gmail.com,227-666-0745x042,2012-06-04,True,\r\n92,Janet,Anderson,janet.anderson@hotmail.com,6904267952,2010-08-08,False,Wall almost property coach inside international price.\r\n93,Michael,Herrera,michael.herrera@gmail.com,8438732889,1960-04-21,False,Hot plan office easy sit century.\r\n94,Cody,Russell,cody.russell@outlook.com,001-700-977-2020,2002-05-07,True,Rest claim world reflect.\r\n95,Mark,Salazar,mark.salazar@outlook.com,+1-633-872-5432x8759,1950-03-31,False,\r\n96,Linda,Hernandez,linda.hernandez@yahoo.com,001-778-564-4699x42049,1912-12-04,True,Month loss west reality and program wait.\r\n97,Kimberly,Porter,kimberly.porter@gmail.com,683-411-4997x387,2010-10-01,False,\r\n98,Toni,Silva,toni.silva@outlook.com,446-981-4803x8156,1931-11-13,True,\r\n99,Michael,Gardner,michael.gardner@yahoo.com,001-842-659-7794x261,1983-09-04,False,\r\n100,Cody,Day,cody.day@hotmail.com,5854403034,1927-02-23,False,Leg apply professional easy natural.\r\n101,Yvonne,Walsh,yvonne.walsh@outlook.com,001-259-812-3660x454,2016-07-18,True,Share there participant at save they.\r\n102,Jean,Porter,jean.porter@hotmail.com,+1-847-529-2064x85384,1925-11-13,True,\r\n103,Taylor,Gay,taylor.gay@outlook.com,5005174613,1978-02-17,False,Visit when great fast medical represent boy.\r\n104,John,Sutton,john.sutton@yahoo.com,001-762-202-7182x68063,2015-02-03,False,\r\n105,Deborah,Ryan,deborah.ryan@hotmail.com,489-203-0375x703,1922-11-12,False,Personal economic American.\r\n106,Carl,Hines,carl.hines@hotmail.com,972.766.1110,1957-11-06,True,Ask so mention modern.\r\n107,Angela,Johns,angela.johns@yahoo.com,584.358.3042x5441,1923-02-22,True,Campaign foreign many provide.\r\n108,Kristin,Simmons,kristin.simmons@gmail.com,001-934-422-1983x29691,1996-07-08,False,A before every full.\r\n109,Ryan,Black,ryan.black@yahoo.com,001-937-490-4498,2020-03-20,True,\r\n110,Rebecca,Hurley,rebecca.hurley@outlook.com,950.674.7175x94317,1965-09-08,False,Section letter win ago.\r\n111,Chad,Smith,chad.smith@hotmail.com,806.807.6623x3006,1947-09-27,True,Enjoy leg close make job join.\r\n112,Bradley,Gomez,bradley.gomez@gmail.com,(451)579-9806x838,1962-08-25,False,Board remain sit treatment.\r\n113,Paul,Baird,paul.baird@outlook.com,262-829-3593,1931-07-23,True,Blue laugh have medical.\r\n114,Erica,Kline,erica.kline@hotmail.com,001-933-585-9094x53018,2022-11-16,True,\r\n115,Joshua,Vance,joshua.vance@yahoo.com,258-245-9446x820,1946-05-16,True,Really night world investment need.\r\n116,Jacob,Walton,jacob.walton@hotmail.com,001-836-520-3931x6492,1910-10-01,True,Occur establish huge wonder teacher.\r\n117,Timothy,Brown,timothy.brown@hotmail.com,001-992-313-2037,1985-09-21,False,Always his peace production.\r\n118,Ivan,Snyder,ivan.snyder@outlook.com,(773)784-9392x206,1936-07-19,False,\r\n119,Grace,Russo,grace.russo@outlook.com,843.294.0934x95411,2011-12-06,True,Role out letter eye drug action.\r\n120,David,Mckee,david.mckee@outlook.com,817.461.2949,2004-12-19,True,Economic civil movement finish really.\r\n121,Paula,Palmer,paula.palmer@outlook.com,473-328-1295x940,1975-06-28,True,\r\n122,James,Ellis,james.ellis@gmail.com,001-792-963-6904x939,1995-03-16,False,Ahead listen occur office student evening than.\r\n123,Amanda,Lin,amanda.lin@hotmail.com,559-590-8759x485,2025-07-28,False,\r\n124,Melinda,Webb,melinda.webb@yahoo.com,298.600.2069x2344,1962-12-11,False,College those strategy affect common indicate.\r\n125,William,Zuniga,william.zuniga@yahoo.com,(636)250-2128,1931-10-01,True,Above so state list last.\r\n126,Christina,Rowland,christina.rowland@gmail.com,(997)391-3690x873,1922-04-13,False,Of better experience away mission herself sea.\r\n127,William,Nelson,william.nelson@gmail.com,001-599-657-7638,1961-08-22,False,Hair small five person peace continue free.\r\n128,Brian,Willis,brian.willis@yahoo.com,460.712.5959x609,1936-05-31,False,\r\n129,Nicole,Strong,nicole.strong@gmail.com,001-861-485-4589x180,2005-12-01,False,\r\n130,Christopher,Gomez,christopher.gomez@yahoo.com,794-515-8075,1988-01-04,False,Pressure analysis end cut.\r\n131,Adam,Carroll,adam.carroll@hotmail.com,001-959-555-9072,1970-05-17,False,Look sure mean serious plan.\r\n132,Eric,Bell,eric.bell@hotmail.com,001-884-967-8084x3947,1999-06-16,False,\r\n133,Kristy,Hines,kristy.hines@outlook.com,3294254372,2010-12-25,False,\r\n134,Jennifer,Edwards,jennifer.edwards@gmail.com,691-929-5937,1916-10-04,False,\r\n135,Sarah,Carr,sarah.carr@hotmail.com,+1-669-445-3551,1954-12-09,True,\r\n136,Jonathan,Thompson,jonathan.thompson@gmail.com,(294)912-2914x33520,1930-06-04,True,\r\n137,Jeffrey,Anderson,jeffrey.anderson@gmail.com,(637)622-2787,1928-06-06,True,Manage here else anything.\r\n138,Timothy,Wade,timothy.wade@outlook.com,871-254-0872x03695,1969-05-29,True,Tough poor reflect adult.\r\n139,Michael,Lopez,michael.lopez@yahoo.com,213-967-7944,2018-03-16,True,Clear available thing prove.\r\n140,Dustin,Stevens,dustin.stevens@outlook.com,247-259-8393,2011-07-28,False,\r\n141,Stacey,Oliver,stacey.oliver@outlook.com,001-488-554-5516x369,1985-09-03,True,\r\n142,Timothy,Mejia,timothy.mejia@gmail.com,+1-365-362-3292,1920-05-11,True,Trade end great sea cup fight call part.\r\n143,Allen,Soto,allen.soto@outlook.com,560-634-3306,1982-09-02,False,Shake pressure respond food.\r\n144,Kristopher,James,kristopher.james@gmail.com,(396)787-2789x067,1939-02-14,False,\r\n145,Donald,Brown,donald.brown@gmail.com,001-797-834-0553,2008-09-26,False,\r\n146,Robert,Vaughn,robert.vaughn@outlook.com,001-727-404-0094,1940-11-12,True,\r\n147,Luis,Phillips,luis.phillips@gmail.com,751-734-2349x291,1973-05-27,False,\r\n148,Melanie,Parker,melanie.parker@yahoo.com,310.541.4339x92324,1950-09-02,False,\r\n149,Julie,Bryant,julie.bryant@outlook.com,(453)598-1754x53852,1960-04-12,False,\r\n150,Melissa,Daniel,melissa.daniel@hotmail.com,677.247.4309,1916-07-25,True,\r\n"
         }
       ]
+    },
+    {
+      "name": "Endpoint 1 - Poblar personas con Faker",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"cantidad\": 50\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/poblar",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "poblar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 9 - Reset base de datos",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/reset",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "reset"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 2- Estadísticas por dominio de correo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/estadisticas/dominios",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "estadisticas",
+            "dominios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Endpoint 3- estadisticaas de la edad",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/estadisticas/edad",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "personas",
+            "estadisticas",
+            "edad"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
