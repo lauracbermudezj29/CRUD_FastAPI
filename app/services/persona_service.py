@@ -98,7 +98,7 @@ def poblar_personas(db: Session, cantidad: int):
             last_name=apellido,
             email=f"{nombre.lower()}.{apellido.lower()}@{random.choice(dominios)}",
             phone=fake.phone_number(),
-            birth_date=fake.date_of_birth(),
+            birth_date=fake.date_of_birth(minimum_age=18, maximum_age=80),
             is_active=fake.boolean(),
             notes=fake.sentence() if fake.boolean() else None,
         )
